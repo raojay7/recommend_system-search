@@ -54,7 +54,8 @@ public class ItemServiceImpl implements ItemService
 			document.setField("specification", solrItem.getSpecification());
 			document.setField("welfare", solrItem.getWelfare());
 			document.setField("workcity", solrItem.getWorkcity());
-
+			document.setField("company_id", solrItem.getCompanyId());
+			document.setField("company_name", solrItem.getCompanyName());
 
 			//向索引库中添加文档
 			solrServer.add(document);

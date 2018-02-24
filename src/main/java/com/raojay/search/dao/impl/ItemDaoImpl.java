@@ -62,14 +62,16 @@ public class ItemDaoImpl implements ItemDao
 			item.setSalaryMin((Integer) solrDocument.get("salary_min"));
 			item.setSalaryMax((Integer) solrDocument.get("salary_max"));
 			item.setEducation((Integer) solrDocument.get("education"));
+			item.setWorkplace((String) solrDocument.get("workplace"));
 			item.setWorkexperienceMin((Integer) solrDocument.get("workexperience_min"));
 			item.setWorkexperienceMax((Integer) solrDocument.get("workexperience_max"));
 			item.setNeedNum((Integer) solrDocument.get("need_num"));
 			item.setJobNature((Integer) solrDocument.get("job_nature"));
 			item.setWelfare((String) solrDocument.get("welfare"));
 			item.setWorkcity((String) solrDocument.get("workcity"));
-			item.setWorkplace((String) solrDocument.get("workplace"));
 			item.setCtime((Date) solrDocument.get("ctime"));
+			item.setCompanyId((Integer) solrDocument.get("company_id"));
+			item.setCompanyName((String) solrDocument.get("company_name"));
 			//添加到工作列表
 			itemList.add(item);
 		}

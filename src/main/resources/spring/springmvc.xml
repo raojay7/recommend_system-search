@@ -13,6 +13,11 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	<!-- 配置资源映射 -->
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/images/" mapping="/images/**"/>
+	<mvc:resources location="/WEB-INF/layui-v2.2.5/" mapping="/layui-v2.2.5/**"/>
 	<!-- 包扫描器，扫描@Controller注解 -->
 	<context:component-scan base-package="com.raojay.search.controller" />
 	
