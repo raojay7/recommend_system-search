@@ -2,6 +2,7 @@ package com.raojay.search.controller;
 
 import com.raojay.search.service.SearchService;
 import com.taotao.common.pojo.Layui;
+import com.taotao.common.pojo.SolrItem;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,5 +45,19 @@ public class SearchController {
 			return Layui.data((long)0, null);
 		}
 
+	}
+
+	@RequestMapping("moreIikeByItem")
+	public Layui  moreIikeByItem(SolrItem item) throws Exception{
+		//解决get乱码问题
+		//queryString = new String(queryString.getBytes("iso8859-1"), "utf-8");
+		//SearchResult searchResult = searchService.search(queryString, page, limit);
+//		item=new SolrItem();
+//		item.setJobName("java大数据工程师");
+//		item.setWorkcity("北京");
+//		item.setEducation(1);
+		SearchResult searchResult = searchService.moreIikeByItem(item);
+		return Layui.data(searchResult.getTotal(), searchResult.getItemList());
+		//return TaotaoResult.ok(searchResult);
 	}
 }
