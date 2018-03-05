@@ -98,9 +98,18 @@ public class ItemDaoImpl implements ItemDao
     {
         SolrQuery query = new SolrQuery();
         query.setRequestHandler("/mlt");
-        query.setQuery("job_name:"+item.getJobName());
-        query.setQuery("workcity:"+item.getWorkcity());
-        query.setQuery("education:"+item.getEducation());
+
+//        query.addFilterQuery("job_name:"+item.getJobName());
+//        query.addFilterQuery("education:"+item.getEducation());
+//        query.addFilterQuery("workcity:"+item.getWorkcity());
+//        query.addFilterQuery("welfare:"+item.getWelfare());
+
+        query.setQuery("job_name:"+item.getJobName()+
+        " AND "+"welfare:"+item.getWelfare());
+        // query.setQuery("specification"+item.getSpecification());
+        query.setFilterQueries("job_name:"+item.getJobName()+
+        " AND "+"education:"+item.getEducation()+
+        " AND "+"workcity:"+item.getWorkcity());
 
         //mlt在查询时，打开/关闭 MoreLikeThisComponent 的布尔值
         query.setParam("mlt", "true");
@@ -111,7 +120,7 @@ public class ItemDaoImpl implements ItemDao
         //mtl.fl 根据哪些字段判断相似度
         query.setParam("mlt.fl", "job_name,education,specification,workcity,welfare");
         // 如果一个词在所有文本中出现次数小于1，则不考虑
-        query.set(MoreLikeThisParams.MIN_DOC_FREQ, 1);
+        query.set(MoreLikeThisParams.MIN_DOC_FREQ, 2);
         // 如果一个词在原始文本中出现次数小于1，则不考虑
         query.set(MoreLikeThisParams.MIN_TERM_FREQ, 1);
         // 长度低于此参数的词语不考虑，对中文来讲,单字无意义
@@ -122,7 +131,7 @@ public class ItemDaoImpl implements ItemDao
         query.set(MoreLikeThisParams.MATCH_INCLUDE, false);
         //设置加权
         query.set(MoreLikeThisParams.BOOST, true);
-        query.set(MoreLikeThisParams.QF, "job_name^3.0 specification^1.5 item_keywords^1.0 company_name^0.7");
+        query.set(MoreLikeThisParams.QF, "specification^15 company_name^0.7");
         QueryResponse resp = solrServer.query(query);
         SolrDocumentList sdl = resp.getResults();
         System.out.println("一共有" + sdl.getNumFound() + "相似数据");
@@ -137,6 +146,8 @@ public class ItemDaoImpl implements ItemDao
             System.out.println(sd.getFieldValue("workexperience_max"));
             System.out.println(sd.getFieldValue("welfare"));
             System.out.println(sd.getFieldValue("ctime"));
+           // System.out.println(sd.getFieldValue("specification"));
+
 
             System.out.println("------");
         }
